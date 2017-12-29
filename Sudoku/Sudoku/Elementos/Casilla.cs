@@ -11,9 +11,12 @@ namespace Sudoku.Elementos
         private int fila;
         private int columna;
         private int valor;
+
+        //Sirve para indicar las casillas que se cargan del fichero y no se pueden modificar
         private Boolean estatico;
       
         public int Valor { get => valor; set => valor = value; }
+
         public bool Estatico { get => estatico; set => estatico = value; }
 
         public int Fila()
@@ -54,7 +57,6 @@ namespace Sudoku.Elementos
             }
         } 
         
-
         public Boolean CasillasIguales(Casilla c)
         {
             return fila == c.fila && columna == c.columna;

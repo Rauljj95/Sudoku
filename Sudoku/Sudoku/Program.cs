@@ -13,6 +13,7 @@ namespace Sudoku
         static void Main(string[] args)
         {
             int opcion = 0;
+
             if (Directory.Exists(@Directory.GetCurrentDirectory().ToString() + "\\Tableros") == false)
             {
                 DirectoryInfo di = Directory.CreateDirectory(@Directory.GetCurrentDirectory().ToString() + "\\Tableros");
@@ -22,14 +23,8 @@ namespace Sudoku
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Clear();
 
-
-
-
-
             Elementos.TableroSudoku miTablero = null;
             Byte opSec = 0;
-
-
             
             while (opcion != 3)
             {
@@ -43,9 +38,7 @@ namespace Sudoku
                 Console.WriteLine("\n  Opcion: \n");
                 int.TryParse(Console.ReadLine(), out opcion);
 
-
-
-
+                
                 switch (opcion)
                 {
                     case 1:
@@ -57,9 +50,14 @@ namespace Sudoku
                         
                         if (miTablero.CargarTablero() == true)
                         {
+                            Console.WriteLine("  \nEspere...");
                             miTablero.ResolverTablero();
                             if(miTablero.ComprobarTablero() == true)
+                            {
+                                miTablero.LimpiarTablero();
                                 Console.WriteLine("\n\n Tablero cargado.\n Pulsa una tecla para continuar.");
+                            }
+                               
                             else
                             {
                                 Console.WriteLine("\n\n Este tablero no se puede resolver Cargando tablero en blanco.\n Pulsa una tecla para continuar.");
@@ -80,6 +78,7 @@ namespace Sudoku
                         break;
 
                 }
+
                 Console.ReadKey();
                        
                 if (opcion == 1 || opcion == 2)
@@ -114,19 +113,21 @@ namespace Sudoku
                         }                          
                         else if(opSec == 2)
                         {
+                            Console.WriteLine("  \nResolviendo tablero, espere...");
                             miTablero.LimpiarTablero();
                             miTablero.ResolverTablero();
-                            Console.Clear();
-                            miTablero.MostrarTablero();
-                            Console.ReadKey();
+                            Console.Clear();                           
                         }
+
                         else if(opSec == 3)
                         {
                             Console.WriteLine("\n Guardar tablero: \n");
-                            miTablero.GuardarTablero();
+                            if(miTablero.GuardarTablero() == true)
+                                Console.WriteLine("\n Tablero guardado.\n");
                             Console.WriteLine("\n Pulse una tecla para continuar.\n");
                             Console.ReadKey();
                         }
+
                         else if(opSec == 4)
                         {
                             Console.WriteLine("\n Volver al menu principal...");
@@ -135,10 +136,12 @@ namespace Sudoku
                             Console.ReadKey();
 
                         }
+
                         else if(opSec == 5)
                         {
                             miTablero.LimpiarTablero();
                         }
+
                         else if(opSec == 6)
                         {
                             miTablero.LimpiarErrores();
@@ -147,22 +150,8 @@ namespace Sudoku
 
             }
             
-         
-
-
-
-
-
-
             Console.ReadKey();
         }
 
-        public static void Menu(out int opcion)
-        {
-            opcion = 0;
-
-
-
-        }
     }
 }

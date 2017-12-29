@@ -24,6 +24,10 @@ namespace Sudoku.Elementos
             }
         }
 
+
+        /// <summary>
+        /// Borra todas las casillas no estaticas del tablero
+        /// </summary>
         public void LimpiarTablero()
         {
             Nodo<Casilla> aux = primero;
@@ -37,6 +41,9 @@ namespace Sudoku.Elementos
             }
         }
 
+        /// <summary>
+        /// Borra todas las casillas incorrectas del tablero
+        /// </summary>
         public void LimpiarErrores()
         {
             Nodo<Casilla> aux = primero;
@@ -50,6 +57,9 @@ namespace Sudoku.Elementos
             }
         }
 
+        /// <summary>
+        /// Muestra el tablero por consola
+        /// </summary>
         public void MostrarTablero()
         {
             int i = 0, j = 0, k = 0;
@@ -106,15 +116,19 @@ namespace Sudoku.Elementos
 
         }
 
+        /// <summary>
+        /// Pide al usuario las coordenadas y el v alor de una casilla y devuelve un numero segun los valores introducidos
+        /// </summary>
+        /// <returns></returns>
         public Byte IntroducirCasilla()
         {
             int fila = -1, columna = -1, valor = -1;
 
-            Console.WriteLine(" \n ** Para mostrar la solucion introducir: fila: 0, columna: 0, valor: 0");
-            Console.WriteLine(" \n ** Para guardar el tablero introducir: fila: 10, columna: 10, valor: 10");
-            Console.WriteLine(" \n ** Para volver al menu introducir: fila: 11, columna: 11, valor: 11");
-            Console.WriteLine(" \n ** Para limpiar el tablero: fila: 12, columna: 12, valor: 12");
-            Console.WriteLine(" \n ** Para limpiar los fallos: fila: 13, columna: 13, valor: 13\n");
+            Console.WriteLine(" \n  ** Para mostrar la solucion (algoritmo marcha atras) introducir: fila: 0, columna: 0, valor: 0");
+            Console.WriteLine("  ** Para guardar el tablero introducir: fila: 10, columna: 10, valor: 10");
+            Console.WriteLine("  ** Para volver al menu introducir: fila: 11, columna: 11, valor: 11");
+            Console.WriteLine("  ** Para limpiar el tablero: fila: 12, columna: 12, valor: 12");
+            Console.WriteLine("  ** Para limpiar los fallos: fila: 13, columna: 13, valor: 13\n");
             Console.Write("\n Introduce la fila: ");
             int.TryParse(Console.ReadLine(), out fila);
 
@@ -161,7 +175,7 @@ namespace Sudoku.Elementos
         }
 
         /// <summary>
-        /// 
+        /// Comprueba si hay coincidencias con una casilla en el tablero y es valida
         /// </summary>
         /// <param name="fila"></param>
         /// <param name="columna"></param>
@@ -198,12 +212,13 @@ namespace Sudoku.Elementos
                 if (Math.Abs(BuscarCasilla(i, columna).Valor) == Math.Abs(BuscarCasilla(fila, columna).Valor) && i != fila)
                     return false;
 
-
-
             return true;
         }
 
-
+        /// <summary>
+        /// Comprueba si el tablero esta correctamente resuelto
+        /// </summary>
+        /// <returns></returns>
         public Boolean ComprobarTablero()
         {
             Nodo<Casilla> aux = primero;
@@ -223,9 +238,12 @@ namespace Sudoku.Elementos
             return fin;
         }
 
+        /// <summary>
+        /// Comprueba si el tablero esta lleno
+        /// </summary>
+        /// <returns></returns>
         public Boolean TableroLleno()
         {
-
             Nodo<Casilla> aux = primero;
 
             while (aux != null)
@@ -239,49 +257,44 @@ namespace Sudoku.Elementos
             return true;
         }
 
+        /// <summary>
+        /// Resuelve un tablero de Sudoku mediante algoritmo de marcha atras
+        /// </summary>
         public void ResolverTablero()
         {
-        
             int i = 0, j = 0, k = 0;
-            Console.Clear();
-            MostrarTablero();
+            
             for (i = 0; i < size; i++)
             {
                 for (j = 0; j < size; j++)
                 {
                     if (BuscarCasilla(i, j).Valor == 0)
                     {
-
                         for (k = 1; k <= size && TableroLleno() == false; k++)
                         {
                             BuscarCasilla(i, j).Valor = k;
-                            if (ComprobarCasillaVal(i, j) == false)
-                                //if (ComprobarTablero() == false)
-                            {
+                            if (ComprobarCasillaVal(i, j) == false)                            
                                 BuscarCasilla(i, j).Valor = 0;                            
-                            }
                             else
                             {
                                 ResolverTablero();
                                 if (TableroLleno() == true)
                                     return;
                                 else
-                                    BuscarCasilla(i, j).Valor = 0;
-                            }
+                                    BuscarCasilla(i, j).Valor = 0;           
+                            }                        
                         }
-
                         if (k > size || BuscarCasilla(i, j).Valor == 0)
-                        {
-                            
-                            return;
-                        }
-
-                           
+                            return;                        
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Carga un tablero desde un fichero xml
+        /// </summary>
+        /// <returns></returns>
         public Boolean CargarTablero()
         {
             int fila = 0, columna = 0, valor = 0;
@@ -341,6 +354,10 @@ namespace Sudoku.Elementos
             return true;
         }
 
+        /// <summary>
+        /// Guarda el tablero en un fichero xml
+        /// </summary>
+        /// <returns></returns>
         public Boolean GuardarTablero()
         {
             string nombre;
@@ -354,7 +371,7 @@ namespace Sudoku.Elementos
 
             if (di.GetFiles().Length > 0)
             {
-                Console.WriteLine("\n Tableros existentes (si no quieres sobreescribir selecciona un nombre distinto\n a los existentes\n");
+                Console.WriteLine("\n Tableros existentes (si no quieres sobreescribir selecciona un nombre distinto\n a los existentes)\n");
 
                 foreach (var fi in di.GetFiles("*.xml"))
                 {

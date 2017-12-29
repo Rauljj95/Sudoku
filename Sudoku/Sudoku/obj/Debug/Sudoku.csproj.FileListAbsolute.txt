@@ -5,3 +5,10 @@ C:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.csprojResol
 C:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.csproj.CoreCompileInputs.cache
 C:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.exe
 C:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.pdb
+D:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\bin\Debug\Sudoku.exe.config
+D:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\bin\Debug\Sudoku.exe
+D:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\bin\Debug\Sudoku.pdb
+D:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.csprojResolveAssemblyReference.cache
+D:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.csproj.CoreCompileInputs.cache
+D:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.exe
+D:\Users\Raul\Documents\GitHub\Sudoku\Sudoku\Sudoku\obj\Debug\Sudoku.pdb

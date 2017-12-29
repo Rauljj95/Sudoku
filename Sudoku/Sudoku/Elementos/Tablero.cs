@@ -10,6 +10,8 @@ namespace Sudoku.Elementos
     {
         protected Nodo<Casilla> primero = null;
         protected Nodo<Casilla> ultimo = null;
+
+        //Tamaño del tablero. Ej: 9x9  - tamaño 9
         protected int size;
 
         public Tablero()
@@ -78,6 +80,11 @@ namespace Sudoku.Elementos
             return true;
         }
 
+        /// <summary>
+        /// Comprueba si ext
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
         public Boolean Existe(Casilla c)
         {
 
@@ -93,6 +100,12 @@ namespace Sudoku.Elementos
             return false;
         }
 
+        /// <summary>
+        /// Devuelve una casilla con las coordenadas indicadas
+        /// </summary>
+        /// <param name="fila"></param>
+        /// <param name="columna"></param>
+        /// <returns></returns>
         public Casilla BuscarCasilla(int fila, int columna)
         {
             Casilla miCas = new Casilla(fila, columna);
