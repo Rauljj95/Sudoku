@@ -128,7 +128,8 @@ namespace Sudoku.Elementos
             Console.WriteLine("  ** Para guardar el tablero introducir: fila: 10, columna: 10, valor: 10");
             Console.WriteLine("  ** Para volver al menu introducir: fila: 11, columna: 11, valor: 11");
             Console.WriteLine("  ** Para limpiar el tablero: fila: 12, columna: 12, valor: 12");
-            Console.WriteLine("  ** Para limpiar los fallos: fila: 13, columna: 13, valor: 13\n");
+            Console.WriteLine("  ** Para mostrar los fallos: fila: 13, columna: 13, valor: 13");
+            Console.WriteLine("  ** Para limpiar los fallos: fila: 14, columna: 14, valor: 14\n");
             Console.Write("\n Introduce la fila: ");
             int.TryParse(Console.ReadLine(), out fila);
 
@@ -156,6 +157,9 @@ namespace Sudoku.Elementos
 
             if (fila == 13 && columna == 13 && valor == 13)
                 return 6;
+
+            if (fila == 14 && columna == 14 && valor == 14)
+                return 7;
 
             if (fila < 1 || fila > size || columna < 1 || columna > size || valor < 1 || valor > size)
             {
@@ -225,9 +229,10 @@ namespace Sudoku.Elementos
             Boolean fin = true;
             while (aux != null)
             {
-                if (ComprobarCasillaVal(aux.GetDato().Fila(), aux.GetDato().Columna()) == false && aux.GetDato().Estatico ==false && aux.GetDato().Valor != 0)
+                if (ComprobarCasillaVal(aux.GetDato().Fila(), aux.GetDato().Columna()) == false && aux.GetDato().Estatico == false && aux.GetDato().Valor != 0)
                 {
-                    aux.GetDato().Valor *= -1;
+                    if (aux.GetDato().Valor > 0)
+                        aux.GetDato().Valor *= -1;
                     fin = false;
                 }
                 else if(ComprobarCasillaVal(aux.GetDato().Fila(), aux.GetDato().Columna()) == false && aux.GetDato().Valor != 0)
@@ -405,9 +410,10 @@ namespace Sudoku.Elementos
                 writer.WriteString(aux.GetDato().Valor.ToString());
                 writer.WriteEndElement();
 
+                writer.WriteEndElement();
                 aux = aux.GetSiguiente();
             }
-            writer.WriteEndElement();
+            
             writer.WriteEndElement();
             writer.Flush();
             writer.WriteEndDocument();

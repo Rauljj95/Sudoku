@@ -19,6 +19,7 @@ namespace Sudoku
                 DirectoryInfo di = Directory.CreateDirectory(@Directory.GetCurrentDirectory().ToString() + "\\Tableros");
             }
             
+         
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Clear();
@@ -142,10 +143,14 @@ namespace Sudoku
                             miTablero.LimpiarTablero();
                         }
 
-                        else if(opSec == 6)
+                        else if(opSec == 7)
                         {
+                            miTablero.ComprobarTablero();
                             miTablero.LimpiarErrores();
                         }
+                        else if(opSec == 6)
+                            miTablero.ComprobarTablero();
+
                     } while (opSec != 4);
 
             }
