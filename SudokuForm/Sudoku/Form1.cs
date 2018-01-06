@@ -60,6 +60,7 @@ namespace Sudoku
 
 
                     aux.MaxLength = 1;
+                   
                     aux.Name = "textBox" + i.ToString() + j.ToString();
                     aux.Size = new System.Drawing.Size(37, 37);
                     aux.TabIndex = 35;
@@ -142,9 +143,14 @@ namespace Sudoku
         private void LimpiarErButton_MouseUp(object sender, MouseEventArgs e)
         {
             InfoLabel.ResetText();
+
             CambiarFondoBoton(sender, e);
-            tablero.ComprobarTablero();
-            tablero.LimpiarErrores();
+
+            if (tablero.ComprobarTablero() == true)
+                InfoLabel.Text = "No hay errores.";
+            else             
+                tablero.LimpiarErrores();
+           
             MostrarCasillas();
             MostrarFondos();
         }
@@ -189,9 +195,36 @@ namespace Sudoku
             }
         }
 
+        private static void WaitSeconds(double nSecs)
+        {
+            // Esperar los segundos indicados
+
+            // Crear la cadena para convertir en TimeSpan
+            string s = "0.00:00:" + nSecs.ToString().Replace(",", ".");
+            TimeSpan ts = TimeSpan.Parse(s);
+
+            // Añadirle la diferencia a la hora actual
+            DateTime t1 = DateTime.Now.Add(ts);
+
+            // Esta asignación solo es necesaria
+            // si la comprobación se hace al principio del bucle
+            DateTime t2 = DateTime.Now;
+
+            // Mientras no haya pasado el tiempo indicado
+            while (t2 < t1)
+            {
+                // Un respiro para el sitema
+                System.Windows.Forms.Application.DoEvents();
+                // Asignar la hora actual
+                t2 = DateTime.Now;
+            }
+        }
+
         private void Cargarbutton_MouseUp(object sender, MouseEventArgs e)
         {
             InfoLabel.ResetText();
+        
+
             this.Cursor = Cursors.AppStarting;
             CambiarFondoBoton(sender, e);
             Stream myStream = null;
@@ -202,6 +235,8 @@ namespace Sudoku
             openFileDialog1.FilterIndex = 2;
             openFileDialog1.RestoreDirectory = true;
             TextBox auxb;
+            Elementos.TableroSudoku tableroAux = tablero;
+           
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -211,9 +246,11 @@ namespace Sudoku
                         using (myStream)
                         {
                             InfoLabel.Text = "Cargando tablero.";
-                            
+                            tablero = new Elementos.TableroSudoku();
                             tablero.CargarTablero(myStream);
                             myStream.Close();
+                            InfoLabel.Text = "Comprobando...";
+                            WaitSeconds(0.2);
                             tablero.ResolverTablero();
                             if(tablero.TableroLleno() != true && tablero.ComprobarTablero() != true)
                             {
@@ -222,7 +259,11 @@ namespace Sudoku
                             }
                             else
                             {
-                                tablero.LimpiarTablero();
+                                InfoLabel.Text = "Tablero cargado.";
+                            }
+                           
+                            
+                            tablero.LimpiarTablero();
                                 LimpiarTablero();
                                 for (int i = 0; i < 9; i++)
                                 {
@@ -238,7 +279,7 @@ namespace Sudoku
                                 MostrarCasillas();
                                 MostrarFondos();
 
-                            }
+                            
                         }
                     }
                 }
@@ -247,7 +288,7 @@ namespace Sudoku
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
-            InfoLabel.ResetText();
+           
             this.Cursor = Cursors.Default;
         }
 
@@ -258,17 +299,30 @@ namespace Sudoku
         {
             this.Cursor = Cursors.AppStarting;
             InfoLabel.ResetText();
+            InfoLabel.Text = "Resolviendo...";
+
+
+            WaitSeconds(0.2);
             CambiarFondoBoton(sender, e);
-            tablero.ComprobarTablero();
-            tablero.LimpiarErrores();
+            if(tablero.ComprobarTablero() == false)
+            {
+             
+                InfoLabel.Text = "No hay solucion.";               
+                MostrarCasillas();
+                MostrarFondos();
+                return;
+            }
+            else
+           // tablero.LimpiarErrores();
             tablero.ResolverTablero();
             MostrarCasillas();
             MostrarFondos();
             this.Cursor = Cursors.Default;
-            if (tablero.TableroLleno() == true)
+
+            if (tablero.TableroLleno() == true && tablero.ComprobarTablero() == true)
                 InfoLabel.Text = "Tablero resuelto.";
             else
-                InfoLabel.Text = "No se pudo resolver el tablero.";
+                InfoLabel.Text = "No hay solucion.";
 
             
             return;
@@ -327,7 +381,12 @@ namespace Sudoku
             if (t.ReadOnly == true)
                 return;
             if (number > 9 || number < 1)
+            {
                 t.Text = " ";
+                InfoLabel.Text = "Numero del 1 al 9.";
+                tablero.BuscarCasilla(tableroSudoku.GetRow((Control)sender), tableroSudoku.GetColumn((Control)sender)).Valor = 0;
+            }
+               
             else
             {
                 t.Text = number.ToString();
@@ -362,6 +421,14 @@ namespace Sudoku
                     
             }
             
+        }
+
+        private void button1_MouseUp(object sender, MouseEventArgs e)
+        {
+            InfoLabel.ResetText();
+            CambiarFondoBoton(sender, e);
+            LimpiarTablero();
+            tablero = new Elementos.TableroSudoku();
         }
     }
 }

@@ -268,7 +268,9 @@ namespace Sudoku.Elementos
         public void ResolverTablero()
         {
             int i = 0, j = 0, k = 0;
-            
+
+            Console.Clear();
+            MostrarTablero();
             for (i = 0; i < size; i++)
             {
                 for (j = 0; j < size; j++)

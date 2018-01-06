@@ -4,13 +4,11 @@
     <Fila>0</Fila>
     <Columna>0</Columna>
     <Valor>0</Valor>
-  </Casilla>
-  <Casilla>
+
     <Fila>0</Fila>
     <Columna>1</Columna>
     <Valor>0</Valor>
-  </Casilla>
-  <Casilla>
+  
     <Fila>0</Fila>
     <Columna>2</Columna>
     <Valor>0</Valor>
@@ -20,7 +18,7 @@
     <Columna>3</Columna>
     <Valor>0</Valor>
   </Casilla>
-  <Casilla>
+  
     <Fila>0</Fila>
     <Columna>4</Columna>
     <Valor>0</Valor>

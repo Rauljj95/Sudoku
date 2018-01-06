@@ -80,13 +80,15 @@ namespace Sudoku.Elementos
             int modulo = (int)Math.Sqrt(Convert.ToDouble(dSize));
             int minFila = fila - (fila % modulo);
             int minCol = columna - (columna % modulo);
-           
+
+
+            
             for (i = minFila; i < (minFila + modulo); i++)
             {
                 for (j = minCol; j < (minCol + modulo); j++)
                 {
                    
-                    if (Math.Abs(BuscarCasilla(i, j).Valor) == Math.Abs(BuscarCasilla(fila, columna).Valor) && i != fila && j != columna)
+                    if (Math.Abs(BuscarCasilla(i, j).Valor) == Math.Abs(BuscarCasilla(fila, columna).Valor) && i != fila && j != columna )
                         return false;
                 }
             }
@@ -238,7 +240,8 @@ namespace Sudoku.Elementos
 
             writer.Formatting = Formatting.Indented;
             writer.WriteStartDocument(false);
-
+            this.ComprobarTablero();
+            this.LimpiarErrores();
             
             writer.WriteStartElement("Tablero");
             while(aux != null)

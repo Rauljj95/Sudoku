@@ -19,7 +19,7 @@ namespace Sudoku
             {
                 DirectoryInfo di = Directory.CreateDirectory(@Directory.GetCurrentDirectory().ToString() + "\\Tableros");
             }
-
+            MessageBox.Show("Se aconseja silenciar la aplicación");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

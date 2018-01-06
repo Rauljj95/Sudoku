@@ -41,6 +41,7 @@ namespace Sudoku
             this.GuardarButton = new System.Windows.Forms.Button();
             this.tableroSudoku = new System.Windows.Forms.TableLayoutPanel();
             this.InfoLabel = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ResolverButton
@@ -150,12 +151,28 @@ namespace Sudoku
             // 
             this.InfoLabel.AutoSize = true;
             this.InfoLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.InfoLabel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InfoLabel.Location = new System.Drawing.Point(496, 37);
+            this.InfoLabel.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InfoLabel.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.InfoLabel.Location = new System.Drawing.Point(486, 50);
             this.InfoLabel.Name = "InfoLabel";
-            this.InfoLabel.Size = new System.Drawing.Size(64, 26);
+            this.InfoLabel.Size = new System.Drawing.Size(0, 26);
             this.InfoLabel.TabIndex = 7;
-            this.InfoLabel.Text = "label1";
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.Location = new System.Drawing.Point(518, 477);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(171, 37);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Tablero vacio";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CambiarFondoBotonIn);
+            this.button1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button1_MouseUp);
             // 
             // Form1
             // 
@@ -166,6 +183,7 @@ namespace Sudoku
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.BackgroundImage = global::Sudoku.Properties.Resources.fondo;
             this.ClientSize = new System.Drawing.Size(734, 551);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.InfoLabel);
             this.Controls.Add(this.GuardarButton);
             this.Controls.Add(this.Cargarbutton);
@@ -194,6 +212,7 @@ namespace Sudoku
         private System.Windows.Forms.Button GuardarButton;
         private System.Windows.Forms.TableLayoutPanel tableroSudoku;
         private Label InfoLabel;
+        private Button button1;
     }
 }
 
