@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*
+ * Proyecto Sudoku 
+ * Autor: Raúl Jiménez Juárez
+ * 
+ * Descripción: Este programa te permite jugar al sudoku, cargar y guardar tableros existentes,
+ * así como reslver un tablero actual mediante algoritmo de marcha atrás.
+ * 
+ * Todos los metodos han sido realizados por: Raúl Jiménez Juárez
+ * 
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +31,7 @@ namespace Sudoku
             {
                 DirectoryInfo di = Directory.CreateDirectory(@Directory.GetCurrentDirectory().ToString() + "\\Tableros");
             }
-            MessageBox.Show("Se aconseja silenciar la aplicación");
+       
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

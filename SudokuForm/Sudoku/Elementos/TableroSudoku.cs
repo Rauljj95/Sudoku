@@ -19,7 +19,7 @@ namespace Sudoku.Elementos
             {
                 for (j = 0; j < size; j++)
                 {
-                    this.Insertar(new Casilla(i, j));
+                    this.Insertar(new Casilla(i, j, 0));
                 }
             }
         }
@@ -57,13 +57,6 @@ namespace Sudoku.Elementos
             }
         }
 
-      
-
-
-        /// <summary>
-        /// Pide al usuario las coordenadas y el v alor de una casilla y devuelve un numero segun los valores introducidos
-        /// </summary>
-        /// <returns></returns>
        
 
         /// <summary>
@@ -108,6 +101,42 @@ namespace Sudoku.Elementos
 
             return true;
         }
+        public Boolean ComprobarCasillaValMat(int fila, int columna, int[,] matriz)
+        {
+            //Comprobar cuadrante
+            int i = 0, j = 0;
+            double dSize = size;
+            int modulo = (int)Math.Sqrt(Convert.ToDouble(dSize));
+            int minFila = fila - (fila % modulo);
+            int minCol = columna - (columna % modulo);
+
+
+
+            for (i = minFila; i < (minFila + modulo); i++)
+            {
+                for (j = minCol; j < (minCol + modulo); j++)
+                {
+
+                    if (Math.Abs(matriz[i, j]) == Math.Abs(matriz[fila, columna]) && i != fila && j != columna)
+                        return false;
+                }
+            }
+
+            //Comprobamos fila
+
+            for (i = 0; i < size; i++)
+                if (Math.Abs(matriz[fila, i]) == Math.Abs(matriz[fila, columna]) && i != columna)
+                    return false;
+
+            //Comprobamos columna
+
+            for (i = 0; i < size; i++)
+                if (Math.Abs(matriz[i, columna]) == Math.Abs(matriz[fila, columna]) && i != fila)
+                    return false;
+
+            return true;
+        }
+
 
         /// <summary>
         /// Comprueba si el tablero esta correctamente resuelto
@@ -133,6 +162,7 @@ namespace Sudoku.Elementos
             return fin;
         }
 
+
         /// <summary>
         /// Comprueba si el tablero esta lleno
         /// </summary>
@@ -151,40 +181,87 @@ namespace Sudoku.Elementos
 
             return true;
         }
+        public Boolean TableroLlenoMat(int[,] matriz)
+        {
+        
+            for(int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (matriz[i, j] == 0)
+                        return false;
+                }                 
+            }
+
+            return true;
+        }
+
 
         /// <summary>
         /// Resuelve un tablero de Sudoku mediante algoritmo de marcha atras
         /// </summary>
-        public void ResolverTablero()
+        public void ResolverTablero(int f, int c)
         {
-            int i = 0, j = 0, k = 0;
-            
+            int[,] matriz = ObtenerMatriz();
+
+            ResolverTableroRec(f, c, matriz);
+            int i = 0, j = 0;
             for (i = 0; i < size; i++)
             {
                 for (j = 0; j < size; j++)
                 {
-                    if (BuscarCasilla(i, j).Valor == 0)
-                    {
-                        for (k = 1; k <= size && TableroLleno() == false; k++)
-                        {
-                            BuscarCasilla(i, j).Valor = k;
-                            if (ComprobarCasillaVal(i, j) == false)                            
-                                BuscarCasilla(i, j).Valor = 0;                            
-                            else
-                            {
-                                ResolverTablero();
-                                if (TableroLleno() == true)
-                                    return;
-                                else
-                                    BuscarCasilla(i, j).Valor = 0;           
-                            }                        
-                        }
-                        if (k > size || BuscarCasilla(i, j).Valor == 0)
-                            return;                        
-                    }
+                   BuscarCasilla(i, j).Valor = matriz[i, j];
                 }
             }
         }
+
+
+        public void ResolverTableroRec(int f, int c, int[,] matriz)
+        {
+            int k = 1;
+
+            if (f < 9)
+            {
+                
+                if (matriz[f, c] == 0)
+                {
+                    while (k <= size)
+                    {
+                        matriz[f, c] = k;
+                        if (ComprobarCasillaValMat(f, c, matriz) == true)
+                        {
+                            ResolverTableroRec(f + ((c + 1) / 9), (c + 1) % 9,  matriz);
+                            if (TableroLlenoMat(matriz) == true)
+                                return;
+                        }
+                        k++;
+                    }
+                    matriz[f, c] = 0;
+                    return;
+                }
+                else
+                    ResolverTableroRec(f + ((c + 1) / 9), (c + 1) % 9, matriz);
+            }
+
+            return;
+        }
+
+
+        public int[,] ObtenerMatriz()
+        {
+            int[,] matriz = new int[size, size];
+
+            for(int i = 0; i < size; i++)
+            {
+                for(int j = 0; j < size; j ++)
+                {
+                    matriz[i, j] = BuscarCasilla(i, j).Valor;
+                }
+            }
+
+            return matriz;
+        }
+
 
         /// <summary>
         /// Carga un tablero desde un fichero xml
@@ -194,33 +271,108 @@ namespace Sudoku.Elementos
         {
             int fila = 0, columna = 0, valor = 0;
             
-            XmlReader reader = XmlReader.Create(file);
+            XmlDocument reader = new XmlDocument();
+            reader.Load(file);
+            XmlNodeList Casillas = reader.GetElementsByTagName("Casilla");
 
-            while (reader.ReadToFollowing("Casilla"))
+            foreach (XmlElement nodo in Casillas)
             {
-                reader.ReadToFollowing("Fila");
-                fila = reader.ReadElementContentAsInt();
+               
+                fila = int.Parse(nodo.GetAttribute("Fila"));
 
-                reader.ReadToFollowing("Columna");
-                columna = reader.ReadElementContentAsInt();
+                columna = int.Parse(nodo.GetAttribute("Columna"));
+                valor = int.Parse(nodo.InnerText);
 
-                reader.ReadToFollowing("Valor");
-                valor = reader.ReadElementContentAsInt();
+                if (fila >= 0 && fila < size && columna >= 0 && columna < size && valor > -10 && valor < 10)
+                {
 
-                if (fila >= 0 && fila < size && columna >= 0 && columna < size && valor > 0 && valor < 10)
+                    BuscarCasilla(fila, columna).Valor = valor;
+                    BuscarCasilla(fila, columna).Estatico = true;
+                }
+
+            }
+            /*while (reader.ReadToFollowing("Casilla"))
+            {
+
+               
+               
+                fila = int.Parse(reader.GetAttribute("Fila"));
+
+
+                columna = int.Parse(reader.GetAttribute("Columna"));
+
+          
+                valor = int.Parse.(reader.GetAttribute("Valor"));
+
+                if (fila >= 0 && fila < size && columna >= 0 && columna < size && valor > -10 && valor < 10)
                 {
                   
                     BuscarCasilla(fila, columna).Valor = valor;
                     BuscarCasilla(fila, columna).Estatico = true;
                 }
-            }
-            reader.Close();
+            }*/
+
             if (primero == null)
                 return false;
-            
+
+            Nodo<Casilla> aux = primero;
+            while(aux != null)
+            {
+                if(ComprobarCasillaVal(aux.GetDato().Fila(), aux.GetDato().Columna()) == false)
+                {
+                    aux.GetDato().Estatico = false;
+                }
+
+                aux = aux.GetSiguiente();
+            }
+
+
            
             return true;
         }
+
+
+
+        /// <summary>
+        /// Te genera un tablero aleatorio
+        /// </summary>
+        /// <param name="dificultad"></param>
+        public void GenerarTablero(int dificultad)
+        {
+            Random rnd = new Random();
+            int fila = 0, columna = 0;
+            try
+            {
+
+
+                for (int i = 1; i < dificultad; i++)
+                {
+
+                    do
+                    {
+                        fila = rnd.Next(0, 700) % 8;
+                        columna = rnd.Next(0, 700) % 8;
+                        System.Windows.Forms.Application.DoEvents();
+                    } while (BuscarCasilla(fila, columna).Valor != 0);
+                    BuscarCasilla(fila, columna).Estatico = true;
+
+                    System.Windows.Forms.Application.DoEvents();
+
+                    do
+                    {
+                        BuscarCasilla(fila, columna).Valor = rnd.Next(1, 9);
+                        System.Windows.Forms.Application.DoEvents();
+                    } while (ComprobarCasillaVal(fila, columna) != true);
+                }
+            }
+            catch
+            {
+                return;
+            }
+              
+            
+        }
+
 
         /// <summary>
         /// Guarda el tablero en un fichero xml
@@ -241,26 +393,21 @@ namespace Sudoku.Elementos
             writer.Formatting = Formatting.Indented;
             writer.WriteStartDocument(false);
             this.ComprobarTablero();
-            this.LimpiarErrores();
+            //this.LimpiarErrores();
             
             writer.WriteStartElement("Tablero");
             while(aux != null)
             {
-                writer.WriteStartElement("Casilla");
+                if (aux.GetDato().Valor != 0)
+                {
+                    writer.WriteStartElement("Casilla");
 
-                writer.WriteStartElement("Fila");
-                writer.WriteString(aux.GetDato().Fila().ToString());
-                writer.WriteEndElement();
 
-                writer.WriteStartElement("Columna");
-                writer.WriteString(aux.GetDato().Columna().ToString());
-                writer.WriteEndElement();
-
-                writer.WriteStartElement("Valor");
-                writer.WriteString(aux.GetDato().Valor.ToString());
-                writer.WriteEndElement();
-
-                writer.WriteEndElement();
+                    writer.WriteAttributeString("Fila", XmlConvert.ToString(aux.GetDato().Fila()));
+                    writer.WriteAttributeString("Columna", XmlConvert.ToString(aux.GetDato().Columna()));
+                    writer.WriteString(aux.GetDato().Valor.ToString());
+                    writer.WriteEndElement();
+                }
                 aux = aux.GetSiguiente();
             }
             
@@ -273,5 +420,6 @@ namespace Sudoku.Elementos
         }
 
 
+       
     }
 }

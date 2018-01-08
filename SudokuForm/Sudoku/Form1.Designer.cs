@@ -42,6 +42,8 @@ namespace Sudoku
             this.tableroSudoku = new System.Windows.Forms.TableLayoutPanel();
             this.InfoLabel = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.comboDificultad = new System.Windows.Forms.ComboBox();
+            this.ButtonGenerar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ResolverButton
@@ -67,7 +69,7 @@ namespace Sudoku
             this.MostrarErButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MostrarErButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MostrarErButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.MostrarErButton.Location = new System.Drawing.Point(518, 210);
+            this.MostrarErButton.Location = new System.Drawing.Point(518, 186);
             this.MostrarErButton.Name = "MostrarErButton";
             this.MostrarErButton.Size = new System.Drawing.Size(171, 37);
             this.MostrarErButton.TabIndex = 2;
@@ -83,7 +85,7 @@ namespace Sudoku
             this.LimpiarErButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LimpiarErButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LimpiarErButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.LimpiarErButton.Location = new System.Drawing.Point(518, 297);
+            this.LimpiarErButton.Location = new System.Drawing.Point(518, 246);
             this.LimpiarErButton.Name = "LimpiarErButton";
             this.LimpiarErButton.Size = new System.Drawing.Size(171, 37);
             this.LimpiarErButton.TabIndex = 3;
@@ -99,7 +101,7 @@ namespace Sudoku
             this.LimpiarTabButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LimpiarTabButton.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LimpiarTabButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.LimpiarTabButton.Location = new System.Drawing.Point(518, 379);
+            this.LimpiarTabButton.Location = new System.Drawing.Point(518, 306);
             this.LimpiarTabButton.Name = "LimpiarTabButton";
             this.LimpiarTabButton.Size = new System.Drawing.Size(171, 37);
             this.LimpiarTabButton.TabIndex = 4;
@@ -165,14 +167,40 @@ namespace Sudoku
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(518, 477);
+            this.button1.Location = new System.Drawing.Point(518, 366);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(171, 37);
             this.button1.TabIndex = 8;
             this.button1.Text = "Tablero vacio";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CambiarFondoBotonIn);
-            this.button1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button1_MouseUp);
+            this.button1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GenerarTablero);
+            // 
+            // comboDificultad
+            // 
+            this.comboDificultad.BackColor = System.Drawing.SystemColors.Window;
+            this.comboDificultad.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboDificultad.FormattingEnabled = true;
+            this.comboDificultad.Location = new System.Drawing.Point(518, 432);
+            this.comboDificultad.Name = "comboDificultad";
+            this.comboDificultad.Size = new System.Drawing.Size(149, 26);
+            this.comboDificultad.TabIndex = 9;
+            // 
+            // ButtonGenerar
+            // 
+            this.ButtonGenerar.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonGenerar.BackgroundImage")));
+            this.ButtonGenerar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ButtonGenerar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonGenerar.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonGenerar.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.ButtonGenerar.Location = new System.Drawing.Point(518, 477);
+            this.ButtonGenerar.Name = "ButtonGenerar";
+            this.ButtonGenerar.Size = new System.Drawing.Size(171, 37);
+            this.ButtonGenerar.TabIndex = 10;
+            this.ButtonGenerar.Text = "GenerarTablero";
+            this.ButtonGenerar.UseVisualStyleBackColor = true;
+            this.ButtonGenerar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CambiarFondoBotonIn);
+            this.ButtonGenerar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GenerarTablero);
             // 
             // Form1
             // 
@@ -183,6 +211,8 @@ namespace Sudoku
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.BackgroundImage = global::Sudoku.Properties.Resources.fondo;
             this.ClientSize = new System.Drawing.Size(734, 551);
+            this.Controls.Add(this.ButtonGenerar);
+            this.Controls.Add(this.comboDificultad);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.InfoLabel);
             this.Controls.Add(this.GuardarButton);
@@ -213,6 +243,8 @@ namespace Sudoku
         private System.Windows.Forms.TableLayoutPanel tableroSudoku;
         private Label InfoLabel;
         private Button button1;
+        private ComboBox comboDificultad;
+        private Button ButtonGenerar;
     }
 }
 

@@ -84,9 +84,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Imagenes\fonfo-form.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Imagenes\fondo-tablero.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -94,15 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Imagenes\tablero-invertido.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Imagenes\tiza_blanca.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Imagenes\tiza_azul2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Imagenes\tiza_amarilla.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
