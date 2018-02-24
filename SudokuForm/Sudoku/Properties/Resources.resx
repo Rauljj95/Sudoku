@@ -127,4 +127,13 @@
   <data name="tablero_invertido" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Imagenes\tablero-invertido.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tiza_amarilla" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imagenes\tiza_amarilla.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tiza_azul" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imagenes\tiza_azul2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tiza_blanca" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Imagenes\tiza_blanca.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
